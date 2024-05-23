@@ -1,0 +1,59 @@
+<div class="container">
+  <!-- Login Form -->
+  <div *ngIf="isLoginMode">
+    <form class="m-3 p-4 border border-primary rounded custom-form" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+      <div class="mb-3 inside-text">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" [(ngModel)]="user.email" required email>
+        <div *ngIf="loginForm.submitted && !loginForm.controls.email?.valid" class="text-danger">
+          Email is required and must be a valid email address.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" [(ngModel)]="user.password" required minlength="6">
+        <div *ngIf="loginForm.submitted && !loginForm.controls.password?.valid" class="text-danger">
+          Password is required and must be at least 6 characters long.
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary me-2">Login</button>
+      <button type="button" class="btn btn-secondary" (click)="toggleMode()">Switch to Registration</button>
+    </form>
+  </div>
+
+  <!-- Registration Form -->
+  <div *ngIf="!isLoginMode">
+    <form class="m-3 p-4 border border-primary rounded custom-form" #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+      <div class="mb-3 inside-text">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" [(ngModel)]="user.userName" required>
+        <div *ngIf="registerForm.submitted && !registerForm.controls.username?.valid" class="text-danger">
+          Username is required.
+        </div>
+      </div>
+      <div class="mb-3 inside-text">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" [(ngModel)]="user.email" required email>
+        <div *ngIf="registerForm.submitted && !registerForm.controls.email?.valid" class="text-danger">
+          Email is required and must be a valid email address.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" [(ngModel)]="user.password" required minlength="6">
+        <div *ngIf="registerForm.submitted && !registerForm.controls.password?.valid" class="text-danger">
+          Password is required and must be at least 6 characters long.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="contact" class="form-label">Contact Number</label>
+        <input type="text" class="form-control" id="contact" name="contact" placeholder="Enter your contact number" [(ngModel)]="user.contactNo" required pattern="^[0-9]*$"  pattern="^\d{10}$">
+        <div *ngIf="registerForm.submitted && !registerForm.controls.contact?.valid" class="text-danger">
+          Contact Number is required and must be numeric and 10 digits..
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary me-2">Register</button>
+      <button type="button" class="btn btn-secondary" (click)="toggleMode()">Switch to Login</button>
+    </form>
+  </div>
+</div>

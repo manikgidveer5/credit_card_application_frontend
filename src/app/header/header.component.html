@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Credit Card Application</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent" *ngIf="authService.isLoggedIn()">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/credit-card">Home</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li> -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Apply
+            </a>
+            <ul class="dropdown-menu">
+                <a class="dropdown-item" (click)="selectCard('MASTERCARD')">MASTERCARD</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" (click)="selectCard('VISA')">VISA</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" (click)="selectCard('RUPAY')">RUPAY</a>
+            </ul>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          </li> -->
+        </ul>
+        <form class="d-flex" role="search" *ngIf="authService.isLoggedIn()">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="searchTerm" name="searchTerm">
+          <button class="btn btn-outline-success" type="submit" (click)="search()">Search</button>
+        </form>
+        <button class="btn btn-outline-danger" *ngIf="authService.isLoggedIn()" (click)="authService.logout()">Logout</button>
+      </div>
+    </div>
+  </nav>

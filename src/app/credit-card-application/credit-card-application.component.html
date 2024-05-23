@@ -1,0 +1,111 @@
+<div class="wrapper">
+  <div class="form_container">
+    <form name="form" (ngSubmit)="onSubmit()">
+      <div class="heading">
+        <h2>Credit Card Application</h2>
+      </div>
+      <div class="mb-3">
+        <label for="fullName" class="form-label">Full Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="fullName"
+          name="fullName"
+          placeholder="Enter your full name"
+          required
+          [(ngModel)]="cardHolderDetails.cardHolderName"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="Enter your email address"
+          required
+          [(ngModel)]="cardHolderDetails.email"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="contactNumber" class="form-label">Contact Number</label>
+        <input
+          type="tel"
+          class="form-control"
+          id="contactNumber"
+          name="contactNumber"
+          placeholder="Enter your contact number"
+          required
+          [(ngModel)]="cardHolderDetails.contactNo"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="contactNumber" class="form-label">Card Type</label>
+        <input
+          type="tel"
+          class="form-control"
+          id="cardType"
+          name="cardType"
+          placeholder="Select Card Type from Apply"
+          disabled
+          [value]="cardType || ''"
+        />
+      </div>
+      <!-- <div class="row">
+        <div class="mb-3">
+          <label for="creditCardNumber" class="form-label"
+            >Credit Card Number</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="creditCardNumber"
+            name="creditCardNumber"
+            placeholder="Enter your credit card number"
+            required
+            [(ngModel)]="cardHolderDetails.card.cardNumber"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="expiryDate" class="form-label">Expiry Date</label>
+          <input
+            type="text"
+            class="form-control"
+            id="expiryDate"
+            name="expiryDate"
+            placeholder="MM/YYYY"
+            required
+            [(ngModel)]="cardHolderDetails.card.expiryDate"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="cvv" class="form-label">CVV</label>
+          <input
+            type="text"
+            class="form-control"
+            id="cvv"
+            name="cvv"
+            placeholder="Enter CVV"
+            required
+            [(ngModel)]="cardHolderDetails.card.cvv"
+          />
+        </div>
+      </div> -->
+      <div class="mb-3 form-check">
+        <input
+            type="checkbox"
+            class="form-check-input"
+            id="termsCheckbox"
+            name="termsCheckbox"
+            required
+            [(ngModel)]="checkboxChecked"
+        />
+        <label class="form-check-label" for="termsCheckbox">I agree to the terms and conditions</label>
+    </div>
+      <div class="btn">
+        <input type="submit" value="Submit Application" [disabled]="!checkboxChecked">
+      </div>
+    </form>
+  </div>
+</div>
