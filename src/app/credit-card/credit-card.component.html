@@ -1,7 +1,7 @@
 <div class="card-container">
-  <div *ngFor="let card of (displayResults ? searchResults : creditCards)" class="card">
-    <div *ngIf="isMasterCard(card)" class="mastercard-container">
-      <div class="mastercard-container">
+  <div *ngFor="let card of (displayResults ? searchResults : creditCards)" class="card-wrapper">
+    <div *ngIf="isMasterCard(card)" class="card mastercard-container">
+      <div class="mastercard-content">
         <header>
           <span class="logo">
             <img src="../../assets/images/logo.png" alt="" />
@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="isVisa(card)" class="visa-container">
+    <div *ngIf="isVisa(card)" class="card visa-container">
       <div class="visa-card">
         <div class="visa-card-inner">
           <div class="visa-front">
