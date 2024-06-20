@@ -8,11 +8,13 @@
   flex-wrap: wrap;
   gap: 20px;
   justify-content: space-around;
+  margin-top: 20px;
 }
 
 .card-wrapper {
   flex: 1 1 calc(33.333% - 40px); /* 3 cards per row, accounting for gaps */
   box-sizing: border-box;
+  min-height: 300px;
 }
 
 
@@ -97,7 +99,7 @@ h5.name {
 
 .visa-container {
   min-height: 100%;
-  width: 100%;
+  /* width: 100%; */
   background: #000;
   display: flex;
   align-items: center;
@@ -207,4 +209,116 @@ h5.name {
 
 .visa-card:hover .visa-card-inner {
   transform: rotateY(180deg);
+}
+
+.rupay-container {
+  perspective: 1000px;
+  /* margin: 10px; */
+}
+
+.rupay-card {
+  width: 500px;
+  height: 300px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s;
+  border-radius: 15px;
+}
+
+.rupay-card:hover {
+  transform: rotateY(180deg);
+}
+
+.rupay-card-inner {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.rupay-front {
+  background: linear-gradient(135deg, #1e5799 0%, #2989d8 50%, #207cca 100%);
+  color: #fff;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+
+.rupay-back {
+  background: #fff;
+  color: #000;
+  transform: rotateY(180deg);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+
+.rupay-map-img {
+  position: absolute;
+  opacity: 0.2;
+  top: 10px;
+  right: 10px;
+  height: 60px;
+}
+
+.rupay-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+
+.rupay-card-no, .rupay-card-holder, .rupay-name {
+  margin-top: 15px;
+}
+
+.rupay-bar {
+  height: 40px;
+  background: #000;
+  margin: 10px 0;
+}
+
+.rupay-card-cvv {
+  justify-content: flex-end;
+}
+
+.rupay-signature {
+  text-align: center;
+  margin-top: 15px;
+}
+
+/* Card Buttons */
+.card-buttons {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.card-buttons button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.card-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.card-wrapper:hover .card-buttons {
+  display: flex;
 }

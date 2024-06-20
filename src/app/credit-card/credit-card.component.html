@@ -1,5 +1,8 @@
 <div class="card-container">
-  <div *ngFor="let card of (displayResults ? searchResults : creditCards)" class="card-wrapper">
+  <div
+    *ngFor="let card of displayResults ? searchResults : creditCards"
+    class="card-wrapper"
+  >
     <div *ngIf="isMasterCard(card)" class="card mastercard-container">
       <div class="mastercard-content">
         <header>
@@ -12,17 +15,21 @@
         <div class="card-details">
           <div class="name-number">
             <h6>Card Number</h6>
-            <h5 class="number">{{card.cardNumber}}</h5>
-            <h5 class="name">{{card.cardHolderDetails.cardHolderName}}</h5>
+            <h5 class="number">{{ card.cardNumber }}</h5>
+            <h5 class="name">{{ card.cardHolderDetails.cardHolderName }}</h5>
           </div>
           <div class="valid-date">
             <h6>Valid Thru</h6>
-            <h5>{{card.expiryDate}}</h5>
+            <h5>{{ card.expiryDate }}</h5>
           </div>
           <div class="cvv">
             <h6>CVV</h6>
-            <h5>{{card.cvv}}</h5>
+            <h5>{{ card.cvv }}</h5>
           </div>
+        </div>
+        <div class="card-buttons">
+          <button (click)="editCard(card)">Edit</button>
+          <button (click)="deleteCard(card)">Delete</button>
         </div>
       </div>
     </div>
@@ -30,39 +37,90 @@
       <div class="visa-card">
         <div class="visa-card-inner">
           <div class="visa-front">
-            <img src="https://i.ibb.co/PYss3yv/map.png" class="visa-map-img">
+            <img src="https://i.ibb.co/PYss3yv/map.png" class="visa-map-img" />
             <div class="visa-row">
-              <img src="https://i.ibb.co/G9pDnYJ/chip.png" width="60px">
-              <img src="https://i.ibb.co/WHZ3nRJ/visa.png" width="60px">
+              <img src="https://i.ibb.co/G9pDnYJ/chip.png" width="60px" />
+              <img src="https://i.ibb.co/WHZ3nRJ/visa.png" width="60px" />
             </div>
             <div class="visa-row visa-card-no">
-              <p>{{card.cardNumber}}</p>
+              <p>{{ card.cardNumber }}</p>
             </div>
             <div class="visa-row visa-card-holder">
               <p>CARD HOLDER</p>
               <p>VALID TILL</p>
             </div>
             <div class="visa-row visa-name">
-              <p>{{card.cardHolderDetails.cardHolderName}}</p>
-              <p>{{card.expiryDate}}</p>
+              <p>{{ card.cardHolderDetails.cardHolderName }}</p>
+              <p>{{ card.expiryDate }}</p>
             </div>
           </div>
           <div class="visa-back">
             <div class="visa-bar"></div>
             <div class="visa-row visa-card-cvv">
               <div>
-                <img src="https://i.ibb.co/S6JG8px/pattern.png">
+                <img src="https://i.ibb.co/S6JG8px/pattern.png" />
               </div>
-              <p>{{card.cvv}}</p>
+              <p>{{ card.cvv }}</p>
             </div>
             <div class="visa-row visa-card-text">
-              <p>This is a virtual card design using HTML and CSS. You can also design something like this.</p>
+              <p>
+                This is a virtual card design using HTML and CSS. You can also
+                design something like this.
+              </p>
             </div>
             <div class="visa-row visa-signature">
               <p>CUSTOMER SIGNATURE</p>
             </div>
           </div>
         </div>
+        <div class="card-buttons">
+          <button (click)="editCard(card)">Edit</button>
+          <button (click)="deleteCard(card)">Delete</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isRuPay(card)" class="card rupay-container">
+      <div class="rupay-card">
+        <div class="rupay-card-inner rupay-front">
+          <img src="https://i.ibb.co/PYss3yv/map.png" class="rupay-map-img" />
+          <div class="rupay-row">
+            <img src="https://i.ibb.co/G9pDnYJ/chip.png" width="60px" />
+            <img src="https://i.ibb.co/6wBXcY6/rupay-logo.png" width="60px" />
+          </div>
+          <div class="rupay-row rupay-card-no">
+            <p>{{ card.cardNumber }}</p>
+          </div>
+          <div class="rupay-row rupay-card-holder">
+            <p>CARD HOLDER</p>
+            <p>VALID TILL</p>
+          </div>
+          <div class="rupay-row rupay-name">
+            <p>{{ card.cardHolderDetails.cardHolderName }}</p>
+            <p>{{ card.expiryDate }}</p>
+          </div>
+        </div>
+        <div class="rupay-card-inner rupay-back">
+          <div class="rupay-bar"></div>
+          <div class="rupay-row rupay-card-cvv">
+            <div>
+              <img src="https://i.ibb.co/S6JG8px/pattern.png" />
+            </div>
+            <p>{{ card.cvv }}</p>
+          </div>
+          <div class="rupay-row rupay-card-text">
+            <p>
+              This is a virtual card design using HTML and CSS. You can also
+              design something like this.
+            </p>
+          </div>
+          <div class="rupay-row rupay-signature">
+            <p>CUSTOMER SIGNATURE</p>
+          </div>
+        </div>
+      </div>
+      <div class="card-buttons">
+        <button (click)="editCard(card)">Edit</button>
+        <button (click)="deleteCard(card)">Delete</button>
       </div>
     </div>
   </div>

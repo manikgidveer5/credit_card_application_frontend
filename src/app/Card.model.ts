@@ -1,7 +1,7 @@
 import { CardHolderDetails } from "./CardHolderDetails.model";
 
 export class Card {
-  // cardID!: number;
+  cardID!: number;
   cardNumber!: number;
   cardName!: string;
   cardType!: CardType;

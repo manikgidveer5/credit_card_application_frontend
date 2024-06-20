@@ -41,68 +41,28 @@
         />
       </div>
       <div class="mb-3">
-        <label for="contactNumber" class="form-label">Card Type</label>
+        <label for="cardType" class="form-label">Card Type</label>
         <input
-          type="tel"
+          type="text"
           class="form-control"
           id="cardType"
           name="cardType"
           placeholder="Select Card Type from Apply"
-          disabled
-          [value]="cardType || ''"
+          readonly
+          [value]="cardType"
         />
       </div>
-      <!-- <div class="row">
-        <div class="mb-3">
-          <label for="creditCardNumber" class="form-label"
-            >Credit Card Number</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="creditCardNumber"
-            name="creditCardNumber"
-            placeholder="Enter your credit card number"
-            required
-            [(ngModel)]="cardHolderDetails.card.cardNumber"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="expiryDate" class="form-label">Expiry Date</label>
-          <input
-            type="text"
-            class="form-control"
-            id="expiryDate"
-            name="expiryDate"
-            placeholder="MM/YYYY"
-            required
-            [(ngModel)]="cardHolderDetails.card.expiryDate"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="cvv" class="form-label">CVV</label>
-          <input
-            type="text"
-            class="form-control"
-            id="cvv"
-            name="cvv"
-            placeholder="Enter CVV"
-            required
-            [(ngModel)]="cardHolderDetails.card.cvv"
-          />
-        </div>
-      </div> -->
       <div class="mb-3 form-check">
         <input
-            type="checkbox"
-            class="form-check-input"
-            id="termsCheckbox"
-            name="termsCheckbox"
-            required
-            [(ngModel)]="checkboxChecked"
+          type="checkbox"
+          class="form-check-input"
+          id="termsCheckbox"
+          name="termsCheckbox"
+          required
+          [(ngModel)]="checkboxChecked"
         />
         <label class="form-check-label" for="termsCheckbox">I agree to the terms and conditions</label>
-    </div>
+      </div>
       <div class="btn">
         <input type="submit" value="Submit Application" [disabled]="!checkboxChecked">
       </div>

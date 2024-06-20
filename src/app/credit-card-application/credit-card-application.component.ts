@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CardHolderDetails } from '../CardHolderDetails.model';
-import { ActivatedRoute } from '@angular/router';
 import { CreditCardService } from '../services/credit-card.service';
 import { Card, CardType } from '../Card.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CardStateService } from '../card-state.service';
 
 @Component({
   selector: 'app-credit-card-application',
@@ -14,17 +15,37 @@ export class CreditCardApplicationComponent implements OnInit {
   cardHolderDetails: CardHolderDetails = new CardHolderDetails();
   checkboxChecked = false;
   cardType: string | null = null;
+  isEditMode: boolean = false;
+  cardId!: number;
 
-  selectedCardType!: string;
-  creditCard!: Card;
+  constructor(
+    private cardTypeService: CreditCardService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
-  constructor(private route: ActivatedRoute, private cardTypeService: CreditCardService) { }
+  ngOnInit(): void {
 
-  ngOnInit(): void {    
-    const cardTypeParam = this.route.snapshot.paramMap.get('cardType');
-    this.selectedCardType = cardTypeParam ? cardTypeParam : 'DefaultCardType';
-    this.cardTypeService.getCardType()
-      .subscribe(cardType => this.cardType = cardType);
+    console.log(this.cardHolderDetails.cardHolderName);
+
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.isEditMode = true;
+        this.cardId = +params['id']; // convert to number
+        this.cardTypeService.getCreditCardById(this.cardId).subscribe((card: Card) => {
+          this.cardHolderDetails = card.cardHolderDetails;
+          this.cardType = card.cardType;
+        });
+      }
+    });
+
+    this.cardHolderDetails = this.cardTypeService.getCardHolderDetails() || new CardHolderDetails();;
+    this.cardType = this.cardTypeService.getCardType();
+    console.log("From Application:- ",this.cardType);
+    this.cardTypeService.cardType$.subscribe((type) => {
+      this.cardType = type;
+      console.log('Current card type:', type);
+    });
   }
 
   onSubmit() {
@@ -47,41 +68,25 @@ export class CreditCardApplicationComponent implements OnInit {
           break;
       }
 
-      const creditCard: Card = {
-        cardNumber: this.generateCardNumber(),
-        cardName: 'Credit Card',
-        expiryDate: this.generateExpiryDate(),
-        cvv: this.generateCVV(),
-        cardType: cardTypeEnum,
-        cardHolderDetails: this.cardHolderDetails
-      };
-      
-      this.cardTypeService.addCreditCard(creditCard)
-        .subscribe(() => {
-          console.log('Card added successfully',creditCard);
+      if (this.isEditMode) {
+        console.log('Updating existing card');
+        this.cardTypeService.updateCreditCard(this.cardId, this.cardHolderDetails).subscribe(() => {
+          console.log('Card updated successfully');
+          this.router.navigate(['/credit-card']);
+        }, error => {
+          console.error('Error updating card:', error);
+        });
+      } else {
+        console.log('Adding new card');
+        this.cardTypeService.addCreditCard(this.cardHolderDetails, cardTypeEnum).subscribe(() => {
+          console.log('Card added successfully');
+          this.router.navigate(['/credit-card']);
         }, error => {
           console.error('Error adding card:', error);
         });
+      }
     } else {
       console.error('Card type is null');
     }
   }
-
-  private generateCardNumber(): number {
-    // Generate a 16-digit random card number
-    return Math.floor(1000000000000000 + Math.random() * 9000000000000000);
-  }
-
-  private generateExpiryDate(): string {
-    // Generate a random expiry date in MM/YYYY format
-    const month = Math.floor(Math.random() * 12) + 1;
-    const year = new Date().getFullYear() + Math.floor(Math.random() * 5); // Expires within the next 5 years
-    return `${('0' + month).slice(-2)}/${year}`;
-  }
-
-  private generateCVV(): number {
-    // Generate a 3-digit CVV
-    return Math.floor(100 + Math.random() * 900);
-  }
 }
-

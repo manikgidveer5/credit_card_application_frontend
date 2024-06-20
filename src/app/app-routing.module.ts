@@ -9,6 +9,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'credit-card', component: CreditCardComponent,canActivate: [AuthGuard] },
   { path: 'apply/:cardType', component: CreditCardApplicationComponent,canActivate: [AuthGuard] },
+  { path: 'update-card/:id', component: CreditCardApplicationComponent,canActivate: [AuthGuard] },
+  // { path: 'edit-card/:id', component: CreditCardApplicationComponent },
   { path: 'login', component: LoginComponent}
 ];
 

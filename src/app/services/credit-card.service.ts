@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Card } from '../Card.model';
+import { Card, CardType } from '../Card.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { CardHolderDetails } from '../CardHolderDetails.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,12 @@ import { HttpClient } from '@angular/common/http';
 export class CreditCardService {
 
   private apiUrl = 'http://localhost:8080/cards';
-  private postUrl = 'http://localhost:8080/card/edit';
+  private getByIdUrl = 'http://localhost:8080/card'
+  private postUrl = 'http://localhost:8080/card/add';
+  private putUrl = 'http://localhost:8080/card/edit';
   private searchUrl = 'http://localhost:8080/card/search';
+  private cardType!: string;
+  cardHolderDetails!: CardHolderDetails;
 
   constructor(private http: HttpClient) {}
 
@@ -19,26 +24,36 @@ export class CreditCardService {
   }
 
   getCreditCardById(id: number): Observable<Card> {
-    return this.http.get<Card>(`${this.apiUrl}/${id}`);
+    return this.http.get<Card>(`${this.getByIdUrl}/${id}`);
   }
 
-  addCreditCard(creditCard: Card): Observable<void> {
-    return this.http.post<void>(this.postUrl, creditCard);
+  addCreditCard(cardHolderDetails: CardHolderDetails, cardType: CardType ): Observable<void> {
+    const url = `${this.postUrl}?cardType=${cardType}`; 
+    console.log("post URL:- ",url)
+    return this.http.post<void>(url, cardHolderDetails);
   }
 
-  updateCreditCard(id: number, creditCard: Card): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${id}`, creditCard);
+  updateCreditCard(id: number, cardHolderDetails: CardHolderDetails): Observable<any> {
+    return this.http.put<any>(`${this.putUrl}/${id}`, cardHolderDetails);
+  }
+
+  setCardHolderDetails(cardHolderDetails:CardHolderDetails) {
+    this.cardHolderDetails = cardHolderDetails;
+  }
+
+  getCardHolderDetails() {
+    return this.cardHolderDetails;
   }
 
   deleteCreditCard(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.getByIdUrl}/${id}`);
   }
 
   searchCreditCards(term: string): Observable<Card[]> {
     return this.http.get<Card[]>(`${this.searchUrl}?term=${term}`);
   }
 
-  //for search result
+  // for search result
 
   private searchResultsSubject = new BehaviorSubject<Card[]>([]);
   searchResults$ = this.searchResultsSubject.asObservable();
@@ -52,13 +67,14 @@ export class CreditCardService {
   private cardTypeSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
   cardType$: Observable<string | null> = this.cardTypeSubject.asObservable();
 
-  setCardType(cardType: string | null): void {
+  setCardType(cardType: string): void {
+    this.cardType = cardType;
     this.cardTypeSubject.next(cardType);
   }
 
-  getCardType(): Observable<string | null> {
-    return this.cardType$;
+  getCardType(): string {
+    console.log('card service get card type:- ', this.cardType);
+    return this.cardType;
   }
-  
 
 }
